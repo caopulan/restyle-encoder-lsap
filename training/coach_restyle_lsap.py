@@ -250,8 +250,8 @@ class Coach:
 		loss_dict = {}
 		loss = 0.0
 		id_logs = None
-		if self.opts.sncd_lambda > 0:  # calculate cos loss though lambda=0
-			dims_to_discriminate = list(range(self.opts.n_styles))
+		if self.opts.sncd_lambda > 0:
+			dims_to_discriminate = list(range(18))
 			latent_s = self.net.decoder.get_style_space(latent, split=True)
 			latent_s = [s / s.norm(2, dim=-1, keepdim=True) for s in latent_s]
 			similarity = [s0 @ s1.T for s0, s1 in zip(latent_s, self.anchor_codes)]
