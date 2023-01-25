@@ -42,6 +42,8 @@ class TrainOptions:
         # loss lambdas
         self.parser.add_argument('--lpips_lambda', default=0, type=float,
                                  help='LPIPS loss multiplier factor')
+        self.parser.add_argument('--sncd_lambda', default=0, type=float,
+                                 help='LPIPS loss multiplier factor')
         self.parser.add_argument('--id_lambda', default=0, type=float,
                                  help='ID loss multiplier factor')
         self.parser.add_argument('--l2_lambda', default=0, type=float,
