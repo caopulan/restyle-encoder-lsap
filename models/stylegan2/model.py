@@ -464,8 +464,43 @@ class Generator(nn.Module):
 
         return latent
 
+    def w_sample(self, n_latent):
+        latent_in = torch.randn(
+            n_latent, self.style_dim, device=self.input.input.device
+        )
+        latent = self.style(latent_in)
+
+        return latent
+
     def get_latent(self, input):
         return self.style(input)
+
+    def get_modulation_modules(self):
+        if not hasattr(self, 'module_list'):
+            module_list = [self.conv1.conv.modulation]
+            for conv in self.convs:
+                module_list.append(conv.conv.modulation)
+            module_list.append(self.to_rgbs[-1].conv.modulation)
+            self.module_list = module_list
+        return self.module_list
+
+    def get_modulation_dims(self):
+        module_list = self.get_modulation_modules()
+        dims = [module.weight.shape[0] for module in module_list]
+        return dims
+
+    def get_style_space(self, latents, split=False):
+        module_list = self.get_modulation_modules()
+
+        if latents.dim() == 2:
+            results = [module(latents) for module in module_list]
+        else:
+            results = [module(latents[:, i]) for i, module in enumerate(module_list)]
+
+        if split:
+            return results
+        else:
+            return torch.cat(results, -1)
 
     def forward(
             self,
