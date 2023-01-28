@@ -79,7 +79,7 @@ def run_on_step_output(step, args):
 	all_scores = list(scores_dict.values())
 	mean = np.mean(all_scores)
 	std = np.std(all_scores)
-	result_str = 'Average loss is {:.2f}+-{:.2f}'.format(mean, std)
+	result_str = 'Average loss is {:.4f}+-{:.4f}'.format(mean, std)
 	print('Finished with ', step_outputs_path)
 	print(result_str)
 
