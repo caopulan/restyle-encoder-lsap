@@ -83,6 +83,8 @@ def run():
 
             # save step-by-step results side-by-side
             for idx, result in enumerate(results):
+                if idx != 4:
+                    continue
                 save_dir = os.path.join(out_path_results, str(idx))
                 os.makedirs(save_dir, exist_ok=True)
                 result.resize(resize_amount).save(os.path.join(save_dir, os.path.basename(im_path)))
